@@ -1,0 +1,77 @@
+-- ===========================================
+-- TABLE: StudentActivityAttempt
+-- ===========================================
+CREATE TABLE StudentActivityAttempt (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    userId INTEGER NOT NULL,
+    activityId INTEGER NOT NULL,
+    score INTEGER DEFAULT 0,
+    createdAt TEXT NOT NULL DEFAULT (datetime('now')),
+    updatedAt TEXT NOT NULL DEFAULT (datetime('now')),
+    FOREIGN KEY (userId) REFERENCES StudentAnswer(id) ON DELETE CASCADE,
+    FOREIGN KEY (activityId) REFERENCES Activity(id) ON DELETE CASCADE
+);
+
+-- ===========================================
+-- INSERT
+-- ===========================================
+insertStudentActivityAttempt:
+INSERT INTO StudentActivityAttempt (
+    userId,
+    activityId,
+    score,
+    createdAt,
+    updatedAt
+)
+VALUES (
+    ?,       -- userId
+    ?,       -- activityId
+    0,       -- initial score
+    datetime('now'),
+    datetime('now')
+);
+
+-- Return last inserted row
+lastInsertStudentActivityAttemptId:
+SELECT last_insert_rowid();
+
+-- ===========================================
+-- UPDATE (score)
+-- ===========================================
+updateActivityAttempt:
+UPDATE StudentActivityAttempt
+SET
+    score = ?,
+    updatedAt = datetime('now')
+WHERE id = ?;
+
+-- ===========================================
+-- DELETE
+-- ===========================================
+deleteActivityAttempt:
+DELETE FROM StudentActivityAttempt
+WHERE id = ?;
+
+-- ===========================================
+-- SELECT
+-- ===========================================
+
+-- Get attempts by user
+selectAttemptsByUser:
+SELECT *
+FROM StudentActivityAttempt
+WHERE userId = ?
+ORDER BY createdAt DESC;
+
+-- Get attempts by activity
+selectAttemptsByActivity:
+SELECT *
+FROM StudentActivityAttempt
+WHERE activityId = ?
+ORDER BY createdAt DESC;
+
+-- Get single attempt by ID
+selectActivityAttemptById:
+SELECT *
+FROM StudentActivityAttempt
+WHERE id = ?;

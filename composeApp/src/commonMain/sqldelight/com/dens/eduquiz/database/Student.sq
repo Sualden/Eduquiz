@@ -1,0 +1,36 @@
+CREATE TABLE Students (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    firstname TEXT NOT NULL,
+    lastname TEXT NOT NULL,
+    yearlevel INTEGER NOT NULL,
+    course TEXT NOT NULL,
+    birthday TEXT NOT NULL,
+    department TEXT NOT NULL,
+    qrcode TEXT NOT NULL,
+    createdAt TEXT DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TEXT DEFAULT CURRENT_TIMESTAMP
+);
+
+insertStudent:
+INSERT INTO Students(firstname, lastname, yearlevel, course, birthday, department, qrcode, createdAt, updatedAt)
+VALUES (?, ?, ?, ?, ?, ?, ?, datetime('now'), datetime('now'));
+
+updateStudent:
+UPDATE Students
+SET firstname = ?, lastname = ?, yearlevel = ?, course = ?, birthday = ?, department = ?, qrcode = ?, updatedAt = datetime('now')
+WHERE id = ?;
+
+deleteStudent:
+DELETE FROM Students WHERE id = ?;
+
+selectAllStudents:
+SELECT * FROM Students;
+
+selectStudentById:
+SELECT * FROM Students WHERE id = ?;
+
+selectStudentByQr:
+SELECT * FROM Students WHERE qrcode = ?;
+
+lastInsertStudentId:
+SELECT last_insert_rowid();

@@ -1,0 +1,44 @@
+-- Table
+CREATE TABLE Admin (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    fullname TEXT NOT NULL,
+    email TEXT NOT NULL UNIQUE,
+    passwordHash TEXT NOT NULL,
+    role TEXT NOT NULL
+);
+
+-- Insert
+insertAdmin:
+INSERT INTO Admin(fullname, email, passwordHash, role)
+VALUES (?, ?, ?, ?);
+
+-- Select all
+selectAllAdmins:
+SELECT * FROM Admin;
+
+-- Select by email
+selectAdminByEmail:
+SELECT * FROM Admin WHERE email = ?;
+
+-- Select by ID
+selectAdminById:
+SELECT * FROM Admin WHERE id = ?;
+
+-- Update
+updateAdmin:
+UPDATE Admin
+SET fullname = ?, email = ?, passwordHash = ?, role = ?
+WHERE id = ?;
+
+-- Delete
+deleteAdminById:
+DELETE FROM Admin WHERE id = ?;
+
+updateAdminById:
+UPDATE Admin
+SET fullname = ?, email = ?, passwordHash = ?, role = ?
+WHERE id = ?;
+
+-- Last inserted row
+lastInsertRowId:
+SELECT last_insert_rowid();

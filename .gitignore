@@ -1,0 +1,40 @@
+# Gradle & Build files
+.gradle/
+.kotlin/
+build/
+**/build/
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Gradle Caches (CRITICAL: Prevents 1GB file uploads!)
+caches/
+wrapper/
+daemon/
+
+# IDE & Local config
+*.iml
+.idea/
+local.properties
+.DS_Store
+
+# iOS / Xcode
+xcuserdata/
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcodeproj/project.xcworkspace/
+!*.xcworkspace/contents.xcworkspacedata
+**/xcshareddata/WorkspaceSettings.xcsettings
+
+# JS / Node
+node_modules/
+
+# Local Databases (Prevents uploading your local test data)
+*.db
+*.db-shm
+*.db-wal
+AppDatabase.db
+
+# Logs
+*.log

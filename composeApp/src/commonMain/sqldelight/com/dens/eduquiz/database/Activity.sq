@@ -1,0 +1,94 @@
+-- Table definition
+CREATE TABLE Activity (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    description TEXT,
+    createdAt TEXT NOT NULL DEFAULT (datetime('now')),
+    updatedAt TEXT NOT NULL DEFAULT (datetime('now')),
+    deadline TEXT,
+    status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'active', 'deactive')),
+
+    -- QR Code Support
+    qr_token TEXT,
+    qr_expires_at TEXT
+);
+
+-- Insert new activity
+insertActivity:
+INSERT INTO Activity(
+    title,
+    description,
+    deadline,
+    status,
+    createdAt,
+    updatedAt
+)
+VALUES (
+    ?,
+    ?,
+    ?,
+    ?,
+    datetime('now'),
+    datetime('now')
+);
+
+-- Select all activities
+selectAllActivities:
+SELECT * FROM Activity;
+
+-- Select activity by ID
+selectActivityById:
+SELECT * FROM Activity
+WHERE id = ?;
+
+-- Select activities by status
+selectActivitiesByStatus:
+SELECT * FROM Activity
+WHERE status = ?;
+
+-- Update activity details
+updateActivity:
+UPDATE Activity
+SET
+    title = ?,
+    description = ?,
+    deadline = ?,
+    status = ?,
+    updatedAt = datetime('now')
+WHERE id = ?;
+
+-- Delete activity
+deleteActivity:
+DELETE FROM Activity
+WHERE id = ?;
+
+-- Get last inserted activity ID
+lastInsertActivityId:
+SELECT last_insert_rowid();
+
+-- Update QR code token and set 15 seconds expiry
+updateQrForActivity:
+UPDATE Activity
+SET
+    qr_token = ?,
+    qr_expires_at = datetime('now', '+15 seconds'),
+    updatedAt = datetime('now')
+WHERE id = ?;
+
+-- Validate QR code (active and not expired)
+selectActivityByQr:
+SELECT *
+FROM Activity
+WHERE id = ?
+  AND qr_token = ?
+  AND status = 'active'
+  AND qr_expires_at > datetime('now');
+
+-- Clear QR code after use or expiration
+clearQrForActivity:
+UPDATE Activity
+SET
+    qr_token = NULL,
+    qr_expires_at = NULL,
+    updatedAt = datetime('now')
+WHERE id = ?;

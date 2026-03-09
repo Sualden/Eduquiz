@@ -1,0 +1,24 @@
+CREATE TABLE ActivityQuestions (
+    activityId INTEGER NOT NULL REFERENCES Activity(id) ON DELETE CASCADE,
+    questionId INTEGER NOT NULL REFERENCES Questions(id) ON DELETE CASCADE,
+    createdAt TEXT DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (activityId, questionId)
+);
+
+insertActivityQuestion:
+INSERT INTO ActivityQuestions(activityId, questionId)
+VALUES (?, ?);
+
+selectQuestionsForActivityFromJoin:
+SELECT Q.*
+FROM ActivityQuestions AQ
+JOIN Questions Q ON Q.id = AQ.questionId
+WHERE AQ.activityId = ?;
+
+deleteQuestionsFromActivity:
+DELETE FROM ActivityQuestions
+WHERE activityId = ?;
+
+deleteSingleQuestion:
+DELETE FROM ActivityQuestions
+WHERE activityId = ? AND questionId = ?;

@@ -1,0 +1,47 @@
+CREATE TABLE Questions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    text TEXT NOT NULL,
+    a TEXT NOT NULL,
+    b TEXT NOT NULL,
+    c TEXT NOT NULL,
+    d TEXT NOT NULL,
+    correct TEXT NOT NULL,
+    activityId INTEGER NOT NULL,
+
+    timer INTEGER NOT NULL DEFAULT 0,  -- <--- ADD THIS LINE
+
+    status TEXT NOT NULL DEFAULT 'pending',
+    createdAt TEXT NOT NULL DEFAULT (datetime('now')),
+    updatedAt TEXT NOT NULL DEFAULT (datetime('now')),
+    FOREIGN KEY (activityId) REFERENCES Activity(id) ON DELETE CASCADE
+);
+
+insertQuestion:
+INSERT INTO Questions(text, a, b, c, d, correct, activityId, timer, status, createdAt, updatedAt)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'), datetime('now')); -- <--- Added timer (?)
+
+selectAllQuestions:
+SELECT * FROM Questions;
+
+selectQuestionById:
+SELECT * FROM Questions WHERE id = ?;
+
+selectQuestionsForActivity:
+SELECT * FROM Questions WHERE activityId = ?;
+
+selectQuestionsByStatus:
+SELECT * FROM Questions WHERE status = ?;
+
+updateQuestion:
+UPDATE Questions
+SET text = ?, a = ?, b = ?, c = ?, d = ?, correct = ?, activityId = ?, timer = ?, status = ?, updatedAt = datetime('now')
+WHERE id = ?; -- <--- Added timer = ?
+
+deleteQuestion:
+DELETE FROM Questions WHERE id = ?;
+
+deleteAllQuestions:
+DELETE FROM Questions;
+
+lastInsertQuestionId:
+SELECT last_insert_rowid();
