@@ -1,40 +1,77 @@
-This is a Kotlin Multiplatform project targeting Android, Desktop (JVM).
+# EduQuiz 🎓
 
-* [/composeApp](./composeApp/src) is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - [commonMain](./composeApp/src/commonMain/kotlin) is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    the [iosMain](./composeApp/src/iosMain/kotlin) folder would be the right place for such calls.
-    Similarly, if you want to edit the Desktop (JVM) specific part, the [jvmMain](./composeApp/src/jvmMain/kotlin)
-    folder is the appropriate location.
+EduQuiz is a cross-platform, local-network assessment system built with Kotlin Multiplatform (KMP) and Compose Multiplatform. It is designed to modernize classroom quizzes by bridging a powerful desktop management system with a lightweight, interactive mobile experience for students.
 
-### Build and Run Android Application
+The application operates entirely on your local network, meaning no internet connection or external cloud database is required to run live quizzes!
 
-To build and run the development version of the Android app, use the run configuration from the run widget
-in your IDE’s toolbar or build it directly from the terminal:
-- on macOS/Linux
-  ```shell
-  ./gradlew :composeApp:assembleDebug
-  ```
-- on Windows
-  ```shell
-  .\gradlew.bat :composeApp:assembleDebug
-  ```
+## ✨ Key Features
 
-### Build and Run Desktop (JVM) Application
+👨‍🏫 Desktop App (Teacher / Admin Portal)
+The desktop application serves as both the teacher's dashboard and the central backend server for the classroom.
 
-To build and run the development version of the desktop app, use the run configuration from the run widget
-in your IDE’s toolbar or run it directly from the terminal:
-- on macOS/Linux
-  ```shell
-  ./gradlew :composeApp:run
-  ```
-- on Windows
-  ```shell
-  .\gradlew.bat :composeApp:run
-  ```
+  Embedded Ktor Server:* Automatically runs a local backend server to securely handle all student requests and database operations.
+	
+  Student Management:* Register and manage enrolled students in a local SQLite database.
+	
+  Question Bank Builder:* Create multiple-choice questions with customized options, correct answers, and individual time limits.
 
----
+  Activity Hosting:* Bundle questions into live "Activities" (quizzes), assign specific students, and launch them in real-time.
+	
+  QR Code Integration:* Automatically generates large QR codes on the screen for students to scan and connect instantly.
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+#📱 Android App (Student Companion)
+
+The Android application is a lightweight client designed for speed and ease of use.
+	
+  QR Code Scanner:* Built-in scanner allows students to simply point their camera at the teacher's screen to join the local network session instantly.
+
+  Live Assessments:* Students pull quiz data from the teacher's desktop server, answer questions within the allotted time, and securely submit their results back to the desktop app.
+
+## 🛠️ Tech Stack
+  Framework:* Kotlin Multiplatform (KMP) & Compose Multiplatform
+	UI:* Jetpack Compose (Android) / Compose for Desktop
+	Networking & Backend:* Ktor (Embedded Server & Client)
+	Database:* SQLDelight (SQLite)
+	Architecture:* MVVM
+
+
+
+## 💻 Getting Started (Installation & Setup)
+
+To run this project locally, you will need a basic Kotlin Multiplatform development environment set up.
+
+### Prerequisites
+* [Android Studio](https://developer.android.com/studio) (Recommended) or IntelliJ IDEA (with the Android plugin installed).
+* **JDK 17** or higher.
+* An Android Emulator or physical Android device (to test the student app).
+
+### 1. Clone the Repository
+Open your terminal and run the following command to download the project to your computer:
+
+``bash
+git clone [https://github.com/Sualden/Eduquiz.git](https://github.com/Sualden/Eduquiz.git)
+cd Eduquiz
+
+2. Open the Project
+    1. Open Android Studio or IntelliJ IDEA.
+    2. Click Open and select the Eduquiz folder you just cloned.
+    3. Wait a few minutes for the IDE to sync and Gradle to download all the necessary dependencies.
+       
+3. Running the Desktop App (Admin / Server)
+The Desktop app automatically starts the embedded Ktor backend, so you must run this first!
+    • Option A (Via IDE): Open the project panel on the left, navigate to src/jvmMain/kotlin/com/dens/eduquiz/main.kt. Click the green Play button next to the main() function.
+    • Option B (Via Terminal): Run the following Gradle command in your IDE's terminal:
+
+   ``bash
+      ./gradlew run
+(Note: On the very first launch, it will automatically create the AppDatabase.db file to store your local data).
+
+5. Running the Android App (Student)
+Make sure the Desktop app is running and your Android device/emulator is connected to the same local network (Wi-Fi) as your computer.
+    • Via IDE: In the top toolbar of Android Studio, select the androidApp or composeApp run configuration, choose your connected device/emulator, and click the green Play button.
+    • Via Terminal: ```bash ./gradlew installDebug
+      
+🔑 Default Admin Login
+When you run the Desktop application for the first time, use these default credentials to log in:
+    • Username: admin
+    • Password: admin123
